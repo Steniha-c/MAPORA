@@ -15,6 +15,10 @@ npm run preview -- --host 0.0.0.0
 
 To connect an API, set `VITE_MAPORA_API_BASE` in the environment before starting Vite or building the app. See [`docs/backend-integration.md`](docs/backend-integration.md) for the proposed contracts. Do not place secret credentials in a `VITE_` variable: Vite values are bundled into the browser app.
 
+## Homepage and visual assets
+
+The public homepage follows the provided cinematic black-and-orange architecture reference: full-bleed hero, animated four-step workflow, spatial capability matrix, interactive sample 2D/3D preview tabs, technology band, CTA and responsive footer. Generated architecture visuals are concept illustrations only; floor-plan geometry, rooms, pathways and the 3D model are not claimed to be real scans or backend inference. Asset notes are in [`public/images/ASSET-CREDITS.md`](public/images/ASSET-CREDITS.md).
+
 ## Demo and connected modes
 
 - **Without `VITE_MAPORA_API_BASE`:** the workspace remains explorable with clearly labelled sample projects, sample SVG floor-plan geometry, and an interactive illustrative 3D scene. No upload, reconstruction, authentication, persistence, or analytics is simulated as successful. The sample SVG export is labelled as illustrative.
@@ -26,7 +30,7 @@ The app supports backend login roles `admin` and `surveyor`; administrator analy
 
 | Route | Purpose |
 | --- | --- |
-| `/` | Marketing site and interactive four-stage capture-to-explore story |
+| `/` | Marketing homepage with interactive sample spatial showcase |
 | `/login` | Backend-only sign-in with validation and API error states |
 | `/dashboard` | Overview with live projects or labelled sample fixtures |
 | `/projects` | Project search, status filter, open actions, and API loading/error/empty states |
