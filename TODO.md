@@ -1,30 +1,32 @@
-# MAPORA implementation outcomes
+# MAPORA frontend implementation outcomes
 
-## Public landing page and product story — complete
-- [x] Create a premium MAPORA landing page, not a generic AI SaaS template, with the brand mark and wordmark; product/how-it-works/features/about navigation; Sign In and Get Started actions; transparent-to-solid navigation behavior; and responsive mobile navigation.
-- [x] Include the two-line hero “Turn Every Walkthrough / Into a Living Map.”, orange word emphasis, the requested product description, “FROM VIDEO TO SPATIAL INTELLIGENCE” label, “Start Mapping” primary CTA, “Explore the Demo” secondary CTA, and an architectural visual that communicates video → 2D plan → 3D space.
-- [x] Include a three-stage product showcase, a four-step explanation of upload/analysis/floor-plan/3D, feature cards for the requested capabilities, an immersive architectural showcase, final “Your Space. Reimagined.” CTA, and a footer. Illustrative visuals are labelled; no testimonials, statistics, addresses, or certifications were invented.
+## Product experience — complete
+- [x] Create a premium public MAPORA landing page with the exact follow-up hero “Every Space Has a Story. / Map It Into Reality.”, supporting copy, primary “Start Mapping” and secondary “Explore the Experience” actions, orange word emphasis, architectural pipeline, four-step process, features, immersive showcase and footer.
+- [x] Add an interactive four-stage Capture → Understand → Reconstruct → Explore story with tab controls, playback, keyboard operation, reduced-motion support, annotations and sample disclaimers.
+- [x] Show the immersive example as paired illustrative 2D floor plan and 3D spatial preview, supported by a sourced and optimized illustrative interior frame. The image source and production licensing caveat are documented in `public/images/ASSET-CREDITS.md`.
+- [x] Include keyframes, pose estimation, monocular depth, wall/door/room semantics, 2D maps, 3D maps, pathway visualization, editing and exports as product capabilities; copy clearly distinguishes planned/connected capabilities from features active in this frontend.
+- [x] Add responsive dark workspace navigation for Overview, New Mapping, My Projects, Floor Plans, 3D Viewer, Settings and role-aware Admin. Configured workspaces redirect unauthenticated users to sign-in; the offline demo workspace remains explorable.
 
-## Workspace and project management — complete
-- [x] Create a consistent responsive dark workspace with MAPORA identity, collapsible sidebar, workspace top bar, and meaningful navigation for Overview, New Mapping, My Projects, Floor Plans, 3D Viewer, and Settings; each destination has an implemented route.
-- [x] Create the Overview with welcome content, Create New Map action, recent project cards, status and dates, and an empty-state path. Seeded records are identified as sample data.
-- [x] Create project listing with search/filter, thumbnails, status indicators and project-open actions; unsupported rename/delete actions are not presented as working backend operations.
+## Identity and access — complete, backend-dependent
+- [x] Implement sign-in validation, password visibility, loading/error states and API-only authentication success; no seeded credentials or fake sign-in.
+- [x] Hold backend sessions in memory only, protect configured workspaces, guard Admin by `admin`, and show Admin/Surveyor role-aware behavior. Server-side permission checks remain required.
+- [x] Add functional sign-in, sign-out, settings/help and global project-search navigation.
 
-## Upload and processing — complete as a local demonstration
-- [x] Create a responsive drag-and-drop and Browse Files upload experience with video-format validation, local filename/size/video preview, replace/remove actions, validation feedback, and a clear Start Processing action. Synthetic unsupported-file validation was exercised in the browser.
-- [x] Do not invent backend file-size limits or fabricate real upload/processing progress. The UI explains that supported limits and real transfer events depend on backend integration; simulated processing status is labelled as a demonstration.
-- [x] Show processing stages for upload, frame extraction, indoor analysis, 2D generation and 3D construction. The sequence is visibly simulated; no completed reconstruction is claimed.
+## Projects and processing — complete, backend-dependent
+- [x] Use live API records when configured; show distinct loading/error/retry/empty states and never substitute sample fixtures after a live API failure. Search, status filtering, opening projects and project details are wired.
+- [x] Add project rename, version list/create/restore and typed-name project-delete confirmation. Mutations appear only with an authenticated API session; errors/permission denials stay visible.
+- [x] Add drag-and-drop/browse, video-type validation, file metadata and local preview, replace/remove, keyboard support, backend-limit disclosure and upload errors. Real upload occurs only through explicit submission to a configured API.
+- [x] Poll backend processing status; display backend-provided stages/progress only; show unknown/loading/error/completed/failed and request retry only through the backend.
 
-## Spatial viewers — complete as illustrative demos
-- [x] Create a floor-plan workspace with SVG room/wall linework, room selection, zoom in/out, fit/reset, pan, grid and label controls, and selection properties. Geometry, labels and dimensions are identified as illustrative, not generated output.
-- [x] Create an interactive 3D viewer with orbit, zoom and pan, reset camera, fullscreen, grid and wireframe controls, a toolbar, lazy-loaded demo scene, and a prominent illustrative-data disclaimer.
-- [x] Keep an integration point for backend-generated floor-plan geometry and 3D output.
+## Spatial editor and viewers — complete, backend-dependent
+- [x] Load typed backend floor-plan room bounds, walls/doors, units and validated dimensions when returned; never substitute sample geometry on configured-API error.
+- [x] Add keyboard-accessible room/wall selection, local label draft, undo/redo, pan/zoom/fit, grid/labels/measurement controls, discard/apply-local-draft states and explicit non-persistence copy. Geometry edits are not saved.
+- [x] Add labelled client-side SVG download for illustrative sample geometry; request PDF/DXF/OBJ/GLTF/GLB from authenticated backend only for live geometry.
+- [x] Load an authorized backend GLTF/GLB model URL where supplied; show loading/error/retry states. Offline mode has interactive, explicitly illustrative geometry and room selection; backend model selection uses semantic object labels when provided.
 
-## Technical and visual quality — complete for the available repository
-- [x] Use React, TypeScript, Vite, reusable components/pages, a dedicated API service layer, a route manifest, no exposed secrets, and responsive desktop/tablet/mobile styles. The checkout had no existing app or backend; that finding is documented and no absent functionality is claimed to be preserved.
-- [x] Use restrained motion, hover and selection feedback, touch-friendly responsive controls, and reduced-motion support.
-- [x] Add run instructions and backend integration documentation. Production build and full dependency audit succeed; the static route manifest validates; all direct page URLs return HTTP 200; the browser shows no runtime console errors on the checked upload/3D pages. The 3D viewer is split into a lazy chunk.
+## Admin, quality and remaining integration
+- [x] Add admin-only API analytics for projects, users, running/failed jobs and average processing duration; provide job search/status filters and retry actions backed by returned job IDs/processing API. No mock metrics are shown.
+- [x] Add route manifest, run instructions, proposed endpoint/types/auth contract, privacy notes, and integration checklist. Backend contracts and server capabilities remain unverified; see `docs/backend-integration.md`.
+- [x] Strict TypeScript/Vite production build passes; dependency audit reports zero vulnerabilities. Three.js is lazy-loaded as a separate chunk; Vite warns it is >500 kB minified.
 
-## Remaining integration work
-
-The real upload endpoint, backend size/format limits, authentication, processing events, project persistence, generated room geometry, 3D model contract, export, and sharing remain blocked on backend contracts; see [`docs/backend-integration.md`](docs/backend-integration.md). The original `MAPORA` gitlink remains untouched because no `.gitmodules` mapping or linked source was available.
+The API, authentication/session strategy, upload policy, persistence, versioning/mutations, processing job service, generated geometry/model assets, export formats and analytics still require backend confirmation. The original unresolved repository gitlink remains untouched.
